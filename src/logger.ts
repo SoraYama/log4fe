@@ -82,7 +82,7 @@ class Logger {
     const now = new Date()
     const { level, time = now, color = level } = options
     if (LOG_LEVELS.indexOf(this.level) > LOG_LEVELS.indexOf(level) || !this.enabled) {
-      return () => {}
+      return
     }
     const dateStr = getDateString(time)
     const timeStr = getTimeString(time)

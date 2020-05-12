@@ -31,9 +31,8 @@ app.use(
 )
 
 router.post('/log', async (ctx) => {
-  // console.log(ctx.request.body)
+  console.log(ctx.request.body)
   const { body } = ctx.request
-  console.log(body)
   if (Array.isArray(body)) {
     io.emit(
       'log',
@@ -47,6 +46,6 @@ app.use(router.routes())
 
 const PORT = 8088
 
-httpServer.listen(PORT, '0.0.0.0')
-
-console.info(`Server is running on port ${PORT}`)
+httpServer.listen(PORT, '0.0.0.0', () => {
+  console.info(`HTTP Server is running on port ${PORT}`)
+})

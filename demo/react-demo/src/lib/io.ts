@@ -1,5 +1,6 @@
 import IO from 'socket.io-client'
+import { SOCKET_IO_URL } from './constants'
 
-const io = IO('http://localhost:8088')
+const io = IO(SOCKET_IO_URL)
 
 export default io

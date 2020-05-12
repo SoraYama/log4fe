@@ -184,7 +184,9 @@ const TerminalPanel = (props: Props) => {
               <ColoredSpan color={colorMap[log.level]}>{log.url}</ColoredSpan>
               <ColoredSpan color={colorMap[log.level]}>{log.reqId}</ColoredSpan>
               <ColoredSpan color={colorMap[log.level]}>{log.level}</ColoredSpan>
-              <span> {log.messages.join(' ')}</span>
+              {log.messages.map((item, id) => (
+                <span key={id}>{JSON.stringify(item).replace(/^"|"$/g, '')}</span>
+              ))}
             </p>
           ))}
           <div ref={bottomRef} />

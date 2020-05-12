@@ -4,6 +4,7 @@ import { LOG_HTTP_URL } from './constants'
 
 const log4fe = Log4fe.getInstance({
   url: LOG_HTTP_URL,
+  autoLogNetwork: false,
 })
 
 export default log4fe

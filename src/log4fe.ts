@@ -126,9 +126,7 @@ class Log4fe {
 (${autoLogRejection ? '✔' : '✘'}) auto log unhandled rejection in promise
 (${autoLogNetwork ? '✔' : '✘'}) auto log ajax request
 unsent log count: ${this._lastUnsendCount}
-current page request ID: ${this.reqId}${
-      this._idFromServer ? ' (from server)' : ' (auto-generated)'
-    }`
+current page request ID: ${this.reqId} ${this._idFromServer ? '(from server)' : '(auto-generated)'}`
   }
 
   private _getReqId() {
@@ -312,7 +310,6 @@ current page request ID: ${this.reqId}${
           if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status >= 200 && xhr.status < 400) {
               this.queue.splice(0, logCount)
-
               this._errorReqCount = 0
               if (this.config.loggerInitOptions?.styled) {
                 this._getConsoleMethod('log')(
@@ -323,14 +320,14 @@ current page request ID: ${this.reqId}${
                 this._getConsoleMethod('log')(`${logCount} log(s) sent successful`)
               }
             } else {
-              logger.error(`Reqort log failed, url: ${this.config.url}, status: ${xhr.status}`)
+              logger.error(`Report log failed, url: ${this.config.url}, status: ${xhr.status}`)
               this._checkErrorReq()
             }
             this._xhr = null
           }
         }
       } catch (err) {
-        logger.error(`Reqort log failed, url: ${this.config.url}`)
+        logger.error(`Report log failed, url: ${this.config.url}, err: `, err || 'null')
         this._checkErrorReq()
         this._xhr = null
       }
