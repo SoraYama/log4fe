@@ -94,7 +94,9 @@ class Log4fe {
       throw new Error(getPrefixedText('Init param must not be empty'))
     }
     if (typeof params === 'string') {
-      this.config.url = params
+      this._parse({
+        url: params,
+      })
     } else if (typeof params === 'object') {
       if (typeof params.url !== 'string') {
         throw new Error(getPrefixedText('Url must be string'))
