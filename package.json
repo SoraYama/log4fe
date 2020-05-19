@@ -1,6 +1,6 @@
 {
   "name": "log4fe",
-  "version": "0.1.0-beta.1",
+  "version": "0.1.0",
   "description": "a light & configurable logger for FE",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
