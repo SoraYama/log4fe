@@ -33,7 +33,7 @@ function parseHeaders(rawHeaders: any) {
 }
 
 export default () => {
-  window.fetch = function (input, init) {
+  globalThis.fetch = function (input, init) {
     return new Promise(function (resolve, reject) {
       var request = new Request(input, init)
 

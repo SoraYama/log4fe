@@ -54,6 +54,10 @@ interface QueryMap {
 }
 
 export const getQuery = () => {
+  const ret: QueryMap = {}
+  if (!window.location) {
+    return ret
+  }
   const { search } = window.location
   if (!search) {
     return {}
@@ -62,7 +66,6 @@ export const getQuery = () => {
     .slice(1)
     .split('&')
     .map((str) => str.split('='))
-  const ret: QueryMap = {}
   splited.forEach(([key, val]) => {
     val = decodeURIComponent(val)
     const target = ret[key]

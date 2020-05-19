@@ -128,13 +128,16 @@ class Log4fe {
 (${autoLogRejection ? '✔' : '✘'}) auto log unhandled rejection in promise
 (${autoLogNetwork ? '✔' : '✘'}) auto log ajax request
 unsent log count: ${this._lastUnsendCount}
-current page request ID: ${this.reqId} ${this._idFromServer ? '(from server)' : '(auto-generated)'}`
+current page request ID: ${this.reqId} ${this._idFromServer ? '(from server)' : '(auto generated)'}`
   }
 
   private _getReqId() {
-    this.reqId = document.querySelector('[name="_reqId"]')
-      ? document.querySelector<HTMLMetaElement>('[name="_reqId"]')!.content
-      : window._reqId || (getQuery().reqId as string)
+    // for react-native
+    if (window.document) {
+      this.reqId = window.document.querySelector('[name="_reqId"]')
+        ? window.document.querySelector<HTMLMetaElement>('[name="_reqId"]')!.content
+        : window._reqId || (getQuery().reqId as string)
+    }
     if (this.reqId) {
       this._idFromServer = true
     } else {
@@ -162,11 +165,9 @@ current page request ID: ${this.reqId} ${this._idFromServer ? '(from server)' : 
     this._handleAjaxAutoLogging()
     this._storageUnsendData()
 
-    if (this.config.autoReport) {
-      this._timer = setInterval(() => {
-        this._send()
-      }, this.config.interval)
-    }
+    this._timer = setInterval(() => {
+      this._send()
+    }, this.config.interval)
   }
 
   private _initLogger() {
@@ -275,6 +276,9 @@ current page request ID: ${this.reqId} ${this._idFromServer ? '(from server)' : 
   }
 
   private _storageUnsendData() {
+    if (!window.onunload) {
+      return
+    }
     window.onunload = () => {
       // 处理未发送的数据
       if (this.queue.length) {
@@ -293,79 +297,90 @@ current page request ID: ${this.reqId} ${this._idFromServer ? '(from server)' : 
   }
 
   private _send() {
+    if (!this.config.autoReport) {
+      return
+    }
     const logCount = this.queue.length
-    if (logCount) {
-      if (this._xhr) {
-        this._xhr.onreadystatechange = null
-        this._xhr.abort()
-      }
+    if (!logCount) {
+      return
+    }
+    if (this._xhr) {
+      this._xhr.onreadystatechange = null
+      this._xhr.abort()
+    }
 
-      const logger = this.getLogger()
+    const logger = this.getLogger()
 
-      try {
-        this._xhr = new XMLHttpRequest()
-        this._xhrOpen.call(this._xhr, 'POST', this.config.url!, true)
-        this._xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8')
-        this._xhrSend.call(this._xhr, JSON.stringify(this.queue))
-        this._xhr.onreadystatechange = () => {
-          const xhr = this._xhr!
-          if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status >= 200 && xhr.status < 400) {
-              this.queue.splice(0, logCount)
-              this._errorReqCount = 0
-              if (this.config.loggerInitOptions?.styled) {
-                this._getConsoleMethod('log')(
-                  `%c[${getTimeString(null)}] - ${logCount} log(s) sent successful`,
-                  `color: ${COLOR_CONFIG.sendSuccess}`
-                )
-              } else {
-                this._getConsoleMethod('log')(`${logCount} log(s) sent successful`)
-              }
+    try {
+      this._xhr = new XMLHttpRequest()
+      this._xhrOpen.call(this._xhr, 'POST', this.config.url!, true)
+      this._xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8')
+      this._xhrSend.call(this._xhr, JSON.stringify(this.queue))
+      this._xhr.onreadystatechange = () => {
+        const xhr = this._xhr!
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+          if (xhr.status >= 200 && xhr.status < 400) {
+            this.queue.splice(0, logCount)
+            this._errorReqCount = 0
+            if (this.config.loggerInitOptions?.styled) {
+              this._getConsoleMethod('log')(
+                `%c[${getTimeString(null)}] - ${logCount} log(s) sent successful`,
+                `color: ${COLOR_CONFIG.sendSuccess}`
+              )
             } else {
-              logger.error(`Report log failed, url: ${this.config.url}, status: ${xhr.status}`)
-              this._checkErrorReq()
+              this._getConsoleMethod('log')(`${logCount} log(s) sent successful`)
             }
-            this._xhr = null
+          } else {
+            logger.error(`Report log failed, url: ${this.config.url}, status: ${xhr.status}`)
+            this._checkErrorReq()
           }
+          this._xhr = null
         }
-      } catch (err) {
-        logger.error(`Report log failed, url: ${this.config.url}, err: `, err || 'null')
-        this._checkErrorReq()
-        this._xhr = null
       }
+    } catch (err) {
+      logger.error(`Report log failed, url: ${this.config.url}, err: `, err || 'null')
+      this._checkErrorReq()
+      this._xhr = null
     }
   }
 
   private _exceptionHandler() {
+    if (!window.onerror || !window.addEventListener) {
+      return
+    }
+
     const { autoLogError, autoLogRejection } = this.config
-    if (autoLogError) {
-      window.onerror = (msg, url, line, col, error) => {
-        this.getLogger().error('[OnError]', msg, `(line: ${line}, col: ${col})`, error?.stack)
-      }
 
-      window.addEventListener(
-        'error',
-        (event) => {
-          const target = event.target || event.srcElement
-
-          const isElementTarget = [HTMLScriptElement, HTMLLinkElement, HTMLImageElement].some(
-            (ele) => target instanceof ele
-          )
-          if (!isElementTarget) {
-            return false
-          }
-          const url = (target as HTMLScriptElement).src || (target as HTMLLinkElement).href
-          this.getLogger().error('[GET resource error]', url)
-        },
-        true
-      )
+    if (!autoLogError) {
+      return
+    }
+    window.onerror = (msg, url, line, col, error) => {
+      this.getLogger().error('[OnError]', msg, `(line: ${line}, col: ${col})`, error?.stack)
     }
 
-    if (autoLogRejection) {
-      window.addEventListener('unhandledrejection', (err) => {
-        this.getLogger().error('[OnRejection]', err.reason)
-      })
+    window.addEventListener(
+      'error',
+      (event) => {
+        const target = event.target || event.srcElement
+
+        const isElementTarget = [HTMLScriptElement, HTMLLinkElement, HTMLImageElement].some(
+          (ele) => target instanceof ele
+        )
+        if (!isElementTarget) {
+          return false
+        }
+        const url = (target as HTMLScriptElement).src || (target as HTMLLinkElement).href
+        this.getLogger().error('[GET resource error]', url)
+      },
+      true
+    )
+
+    if (!autoLogRejection) {
+      return
     }
+    window.addEventListener('unhandledrejection', (err) => {
+      this.getLogger().error('[OnRejection]', err.reason)
+    })
   }
 
   private _checkErrorReq() {
