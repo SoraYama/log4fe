@@ -21,7 +21,10 @@ export const getPrefixedText = (txt: string) => `[LOG4FE] - ${txt}`
 export const styledSupport = /chrome|firefox/gi.test(navigator.userAgent)
 
 export const resolveUrl = (url: string) => {
-  const a = document.createElement('a')
+  if (!window.document) {
+    return url
+  }
+  const a = window.document.createElement('a')
   a.href = url
   return `${a.protocol}//${a.host}${a.pathname}${a.search}${a.hash}`
 }

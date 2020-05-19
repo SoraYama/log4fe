@@ -1,3 +1,5 @@
+var self = globalThis
+
 var support = {
   searchParams: 'URLSearchParams' in self,
   iterable: 'Symbol' in self && 'iterator' in Symbol,

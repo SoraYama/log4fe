@@ -48,7 +48,7 @@ class Log4fe {
     time: time.getTime(),
     level,
     messages: msgs,
-    url: location.href,
+    url: window?.location?.href || 'unknown',
     agent: navigator.userAgent,
   })
 
@@ -196,7 +196,7 @@ current page request ID: ${this.reqId} ${this._idFromServer ? '(from server)' : 
   private _handleAjaxAutoLogging() {
     if (this.config.autoLogNetwork) {
       const self = this
-      const logger = this.getLogger('Ajax', { enabled: true })
+      const logger = this.getLogger('ajax', { enabled: true })
 
       XMLHttpRequest.prototype.open = function open(...args: any) {
         this._log4feMethod = args[0]
