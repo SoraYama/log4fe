@@ -19,6 +19,10 @@
     "postpublish": "npm run build",
     "lint": "tsc --noEmit && eslint '*/**/*.ts' --quiet --fix"
   },
+  "bugs": {
+    "email": "sorayamahou@gmail.com",
+    "url": "https://github.com/SoraYama/log4fe/issues"
+  },
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",

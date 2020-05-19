@@ -24,7 +24,7 @@ class Logger {
 
   constructor({
     name,
-    enabled = false,
+    enabled = true,
     level = 'info',
     styled = true,
     logTime = true,
