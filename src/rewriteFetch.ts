@@ -1,4 +1,6 @@
-var self = globalThis
+import { getGlobalObject } from './utils'
+
+var self = getGlobalObject()
 
 var support = {
   searchParams: 'URLSearchParams' in self,

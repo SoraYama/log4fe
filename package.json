@@ -56,5 +56,8 @@
     "*.{md,json}": [
       "prettier --write"
     ]
+  },
+  "dependencies": {
+    "@types/node": "12"
   }
 }

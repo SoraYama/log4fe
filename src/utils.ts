@@ -1,3 +1,5 @@
+declare var global: any
+
 const autoComplete = (dig: string) => (dig.length === 1 ? `0${dig}` : dig)
 
 export const getTimeString = (time: Date | null) => {
@@ -83,6 +85,21 @@ export const getQuery = () => {
     }
   })
   return ret
+}
+
+export function getGlobalObject() {
+  if (typeof globalThis !== 'undefined') {
+    return globalThis
+  }
+  if (typeof self !== 'undefined') {
+    return self
+  }
+  if (typeof window !== 'undefined') {
+    return window
+  }
+  if (typeof global !== 'undefined') {
+    return global
+  }
 }
 
 export const doNothing = () => {}
