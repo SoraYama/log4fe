@@ -1,4 +1,4 @@
-declare var global: any
+declare let global: any
 
 const autoComplete = (dig: string) => (dig.length === 1 ? `0${dig}` : dig)
 

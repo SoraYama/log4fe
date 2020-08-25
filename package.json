@@ -17,7 +17,8 @@
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.js && tsc",
     "dev": "tsc --watch",
     "prepublish": "tsc && npm run build",
-    "lint": "tsc --noEmit && eslint '*/**/*.ts' --quiet --fix"
+    "lint": "tsc --noEmit && eslint '*/**/*.ts' --quiet --fix",
+    "doc": "typedoc --tsconfig ./tsconfig.json"
   },
   "bugs": {
     "email": "sorayamahou@gmail.com",
@@ -37,6 +38,7 @@
     "lint-staged": "^10.2.11",
     "prettier": "^2.0.5",
     "ts-loader": "^8.0.2",
+    "typedoc": "^0.18.0",
     "typescript": "^3.9.7",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "^4.44.1",
