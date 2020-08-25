@@ -1,6 +1,6 @@
 # Log4fe
 
-A light & configurable logger for front-end based on [lajax](https://github.com/eshengsky/lajax)
+A light & configurable logger for front-end based on [lajax](https://github.com/eshengsky/lajax), docs [here](https://sorayama.me/log4fe)
 
 ## features
 
