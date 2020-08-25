@@ -7,7 +7,7 @@ cache:
     - node_modules
 branches:
   only:
-    - dev
+    - master
 deploy:
   provider: pages
   local-dir: docs
