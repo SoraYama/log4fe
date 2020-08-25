@@ -1,0 +1,418 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>log4fe</title>
+	<meta name="description" content="Documentation for log4fe">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">log4fe</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1>log4fe</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#log4fe" id="log4fe" style="color: inherit; text-decoration: none;">
+					<h1>Log4fe</h1>
+				</a>
+				<p>A light &amp; configurable logger for front-end based on <a href="https://github.com/eshengsky/lajax">lajax</a></p>
+				<a href="#features" id="features" style="color: inherit; text-decoration: none;">
+					<h2>features</h2>
+				</a>
+				<ul>
+					<li>Auto log error when fetching static resource</li>
+					<li>Auto log AJAX error</li>
+					<li>Auto report logs to your own server</li>
+					<li>Report &amp; log by level</li>
+					<li>Name &amp; customize multi loggers</li>
+					<li>Beauty your console</li>
+				</ul>
+				<a href="#install" id="install" style="color: inherit; text-decoration: none;">
+					<h2>install</h2>
+				</a>
+				<pre><code class="language-bash">npm i log4fe</code></pre>
+				<a href="#configure" id="configure" style="color: inherit; text-decoration: none;">
+					<h2>configure</h2>
+				</a>
+				<p>You can directly pass the URL:</p>
+				<pre><code class="language-js"><span class="hljs-keyword">import</span> Log4fe <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;log4fe&#x27;</span>
+
+<span class="hljs-keyword">const</span> log4fe = <span class="hljs-keyword">new</span> Log4fe(<span class="hljs-string">&#x27;&lt;URL to report logs&gt;&#x27;</span>)</code></pre>
+				<p>or pass the config object:</p>
+				<pre><code class="language-js"><span class="hljs-keyword">import</span> Log4fe <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;log4fe&#x27;</span>
+
+<span class="hljs-keyword">const</span> log4fe = <span class="hljs-keyword">new</span> Log4fe({
+  <span class="hljs-attr">url</span>: <span class="hljs-string">&#x27;&lt;URL&gt;&#x27;</span>,
+  ...
+})</code></pre>
+				<a href="#log4fe-config" id="log4fe-config" style="color: inherit; text-decoration: none;">
+					<h3>Log4fe Config</h3>
+				</a>
+				<table>
+					<thead>
+						<tr>
+							<th align="center">Name</th>
+							<th align="center">Required</th>
+							<th align="center">Type</th>
+							<th>Description</th>
+							<th align="center">Default</th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td align="center"><code>url</code></td>
+							<td align="center">✅</td>
+							<td align="center"><code>string</code></td>
+							<td>The url to report logs</td>
+							<td align="center">N/A</td>
+						</tr>
+						<tr>
+							<td align="center"><code>interval</code></td>
+							<td align="center">❌</td>
+							<td align="center"><code>number</code></td>
+							<td>Interval for checking and reporting the log queue</td>
+							<td align="center"><code>5000</code></td>
+						</tr>
+						<tr>
+							<td align="center"><code>maxErrorReq</code></td>
+							<td align="center">❌</td>
+							<td align="center"><code>number</code></td>
+							<td>Limit of reporting. When the limit exceeded, reporting function will no longer work</td>
+							<td align="center"><code>5</code></td>
+						</tr>
+						<tr>
+							<td align="center"><code>showDesc</code></td>
+							<td align="center">❌</td>
+							<td align="center"><code>boolean</code></td>
+							<td>Whether to show the init message in console</td>
+							<td align="center"><code>true</code></td>
+						</tr>
+						<tr>
+							<td align="center"><code>autoReport</code></td>
+							<td align="center">❌</td>
+							<td align="center"><code>boolean</code></td>
+							<td>Whether the log message will be auto pushed to the queue</td>
+							<td align="center"><code>true</code></td>
+						</tr>
+						<tr>
+							<td align="center"><code>autoLogError</code></td>
+							<td align="center">❌</td>
+							<td align="center"><code>boolean</code></td>
+							<td>Whether log &amp; report uncaught script error</td>
+							<td align="center"><code>true</code></td>
+						</tr>
+						<tr>
+							<td align="center"><code>autoLogRejection</code></td>
+							<td align="center">❌</td>
+							<td align="center"><code>boolean</code></td>
+							<td>Whether log &amp; report uncaught promise rejection</td>
+							<td align="center"><code>true</code></td>
+						</tr>
+						<tr>
+							<td align="center"><code>autoLogNetwork</code></td>
+							<td align="center">❌</td>
+							<td align="center"><code>boolean</code></td>
+							<td>Whether log &amp; report AJAX request</td>
+							<td align="center"><code>true</code></td>
+						</tr>
+						<tr>
+							<td align="center"><code>networkLogFilter</code></td>
+							<td align="center">❌</td>
+							<td align="center"><code>(method: string, url: string) =&gt; boolean</code></td>
+							<td>A filter function for logging what you want</td>
+							<td align="center"><code>() =&gt; true</code></td>
+						</tr>
+						<tr>
+							<td align="center"><code>outputToConsole</code></td>
+							<td align="center">❌</td>
+							<td align="center"><code>boolean</code></td>
+							<td>Whether show logs in console</td>
+							<td align="center"><code>true</code></td>
+						</tr>
+						<tr>
+							<td align="center"><code>loggerInitOptions</code></td>
+							<td align="center">❌</td>
+							<td align="center"><code>LoggerInitOptions</code></td>
+							<td>The initial params for creating a new logger</td>
+							<td align="center"><code>true</code></td>
+						</tr>
+				</tbody></table>
+				<a href="#single-logger-config" id="single-logger-config" style="color: inherit; text-decoration: none;">
+					<h3>Single Logger Config</h3>
+				</a>
+				<table>
+					<thead>
+						<tr>
+							<th align="center">Name</th>
+							<th align="center">Required</th>
+							<th align="center">Type</th>
+							<th>Description</th>
+							<th align="center">Default</th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td align="center"><code>name</code></td>
+							<td align="center">✅</td>
+							<td align="center"><code>string</code></td>
+							<td>Logger name</td>
+							<td align="center"><code>main</code></td>
+						</tr>
+						<tr>
+							<td align="center"><code>enabled</code></td>
+							<td align="center">❌</td>
+							<td align="center"><code>boolean</code></td>
+							<td>Whether enabled when logger created, can be changed later in <code>console</code></td>
+							<td align="center"><code>main</code></td>
+						</tr>
+						<tr>
+							<td align="center"><code>level</code></td>
+							<td align="center">❌</td>
+							<td align="center"><code>string</code></td>
+							<td>Logger level, ignore lower levels</td>
+							<td align="center"><code>info</code></td>
+						</tr>
+						<tr>
+							<td align="center"><code>styled</code></td>
+							<td align="center">❌</td>
+							<td align="center"><code>boolean</code></td>
+							<td>Whether to log with style in <code>console</code></td>
+							<td align="center"><code>true</code></td>
+						</tr>
+						<tr>
+							<td align="center"><code>styleCSS</code></td>
+							<td align="center">❌</td>
+							<td align="center">`string</td>
+							<td>GetStyleCSSFunc`</td>
+							<td align="center">Whether to log with style in <code>console</code></td>
+						</tr>
+						<tr>
+							<td align="center"><code>prefix</code></td>
+							<td align="center">❌</td>
+							<td align="center">`string</td>
+							<td>GetPrefixFunc`</td>
+							<td align="center"><strong>Only work when styled set to true</strong> string before log message in <code>console</code></td>
+						</tr>
+						<tr>
+							<td align="center"><code>logTime</code></td>
+							<td align="center">❌</td>
+							<td align="center"><code>boolean</code></td>
+							<td>Log time string before message in <code>console</code></td>
+							<td align="center"><code>true</code></td>
+						</tr>
+						<tr>
+							<td align="center"><code>sendToServer</code></td>
+							<td align="center">❌</td>
+							<td align="center"><code>boolean</code></td>
+							<td>Whether to report on this logger</td>
+							<td align="center"><code>true</code></td>
+						</tr>
+				</tbody></table>
+				<pre><code class="language-ts"><span class="hljs-comment">// Type Annotation</span>
+<span class="hljs-keyword">type</span> GetStyleCSSFunc = <span class="hljs-function">(<span class="hljs-params">colorEnum: ColorEnums</span>) =&gt;</span> <span class="hljs-built_in">string</span>
+
+<span class="hljs-keyword">type</span> GetPrefixFunc = <span class="hljs-function">(<span class="hljs-params">
+  dateStr: <span class="hljs-built_in">string</span>,
+  timeStr: <span class="hljs-built_in">string</span>,
+  loggerName: <span class="hljs-built_in">string</span>,
+  level: LoggerLevel
+</span>) =&gt;</span> <span class="hljs-built_in">string</span>
+
+<span class="hljs-keyword">interface</span> LoggerInitParam {
+  name: <span class="hljs-built_in">string</span>
+  level?: LoggerLevel
+  enabled?: <span class="hljs-built_in">boolean</span>
+  styled?: <span class="hljs-built_in">boolean</span>
+  styleCSS?: GetStyleCSSFunc | <span class="hljs-built_in">string</span>
+  prefix?: GetPrefixFunc | <span class="hljs-built_in">string</span>
+  logTime?: <span class="hljs-built_in">boolean</span>
+  sendToServer?: <span class="hljs-built_in">boolean</span>
+}
+
+<span class="hljs-keyword">type</span> LoggerInitOptions = Omit&lt;LoggerInitParam, <span class="hljs-string">&#x27;name&#x27;</span>&gt;</code></pre>
+				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+					<h2>Usage</h2>
+				</a>
+				<pre><code class="language-js"><span class="hljs-comment">// log4fe.ts / js</span>
+<span class="hljs-keyword">import</span> Log4fe <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;log4fe&#x27;</span>
+
+<span class="hljs-comment">// Init</span>
+<span class="hljs-keyword">const</span> log4fe = <span class="hljs-keyword">new</span> Log4fe({
+  <span class="hljs-attr">url</span>: <span class="hljs-string">&#x27;&lt;YOUR CONFIGURED SERVER URL&gt;&#x27;</span>,
+  ... <span class="hljs-comment">// Other config mentioned up above in `LoggerInitParam`</span>
+})
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> log4fe
+
+<span class="hljs-comment">// foo.ts / js</span>
+<span class="hljs-keyword">import</span> log4fe <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./log4fe.ts&#x27;</span>
+
+<span class="hljs-keyword">const</span> logger = log4fe.getLogger(<span class="hljs-string">&#x27;foo&#x27;</span>, {
+  <span class="hljs-attr">level</span>: <span class="hljs-string">&#x27;debug&#x27;</span>,
+  ... <span class="hljs-comment">// Other options mentioned up above in `LoggerInitOptions`</span>
+})
+
+logger.debug(<span class="hljs-string">&#x27;what you want to debug&#x27;</span>)
+logger.info(<span class="hljs-string">&#x27;what you want to log&#x27;</span>)
+logger.warn(<span class="hljs-string">&#x27;what you want to warn&#x27;</span>)
+logger.error(<span class="hljs-string">&#x27;DANGER!&#x27;</span>)</code></pre>
+				<a href="#notice-amp-tricks" id="notice-amp-tricks" style="color: inherit; text-decoration: none;">
+					<h2>Notice &amp; Tricks</h2>
+				</a>
+				<ul>
+					<li><p><strong>Do Not</strong> support <code>Node.js</code> for there are plenty of better libs for logging in <code>Node.js</code> env</p>
+					</li>
+					<li><p><strong>Do Not</strong> <code>new</code> multi instance for <code>Log4fe</code> is singleton. You can get instance by using <code>Log4fe.getInstance()</code> instead</p>
+					</li>
+					<li><p><code>Log4fe</code> instance will manage every logger you created by <code>getLogger</code> by using a <code>Map</code>. Although you can set options by visit a specific logger like
+						<code>log4fe.getLogger(&#39;app&#39;).styled = false</code>, the better practice may be passing a proper config object when invoke <code>getLogger(&#39;app&#39;, APP_OPTIONS)</code> first time</p>
+					</li>
+					<li><p>Frequence &amp; Log array size may be 2 aspects to set proper interval when sending logs</p>
+					</li>
+					<li><p>You can customize almost details after having a glance at the interface in doc</p>
+					</li>
+					<li><p>Support React Native env, but currently not support auto log error and other browser-related features</p>
+					</li>
+					<li><p>The class <code>Log4fe</code> will be attatched to <code>globalThis</code> when instance init, for better experience when debug in <code>console</code>
+						(Try type <code>Log4fe.getInstance().list()</code> in <code>chrome console</code>)</p>
+					</li>
+				</ul>
+				<a href="#bugs-amp-contribute" id="bugs-amp-contribute" style="color: inherit; text-decoration: none;">
+					<h2>Bugs &amp; Contribute</h2>
+				</a>
+				<p>Bugs &amp; feature requirement can be feedback at <a href="https://github.com/SoraYama/log4fe/issues">github</a></p>
+				<p>Please be sure you finished reading the doc and the bug can be reproduced. Any detail about your bug is welcomed, such as Browser version, OS, output in <code>console</code>, etc.</p>
+				<a href="#contribute" id="contribute" style="color: inherit; text-decoration: none;">
+					<h3>Contribute</h3>
+				</a>
+				<p>The project is coded with <a href="https://www.typescriptlang.org/docs/home.html">Typescript</a></p>
+				<pre><code class="language-sh">git <span class="hljs-built_in">clone</span> git@github.com:SoraYama/log4fe.git
+
+<span class="hljs-built_in">cd</span> log4fe
+
+yarn <span class="hljs-comment"># npm i</span>
+
+<span class="hljs-comment"># develop</span>
+yarn dev</code></pre>
+				<p>Please make sure eslint works properly and feel free to submit PR :)</p>
+				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+					<h2>License</h2>
+				</a>
+				<p>MIT</p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_index_.html">&quot;index&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_src_booster_.html">&quot;src/booster&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_src_constants_.html">&quot;src/constants&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_src_log4fe_.html">&quot;src/log4fe&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_src_logger_.html">&quot;src/logger&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_src_rewritefetch_.html">&quot;src/rewrite<wbr>Fetch&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_src_types_.html">&quot;src/types&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_src_utils_.html">&quot;src/utils&quot;</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
