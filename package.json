@@ -18,7 +18,7 @@
     "dev": "tsc --watch",
     "prepublish": "tsc && npm run build",
     "lint": "tsc --noEmit && eslint '*/**/*.ts' --quiet --fix",
-    "doc": "typedoc --tsconfig ./tsconfig.json"
+    "doc": "typedoc --tsconfig ./tsconfig.json && touch ./docs/.nojekyll"
   },
   "bugs": {
     "email": "sorayamahou@gmail.com",
