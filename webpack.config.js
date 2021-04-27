@@ -7,6 +7,7 @@ module.exports = {
   output: {
     filename: 'log4fe.js',
     path: path.resolve(__dirname, 'dist'),
+    libraryTarget: 'umd',
   },
   resolve: {
     extensions: ['.ts', '.js', '.json'],

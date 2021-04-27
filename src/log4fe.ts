@@ -408,6 +408,4 @@ current page request ID: ${this.reqId} ${this._idFromServer ? '(from server)' : 
   }
 }
 
-window.Log4fe = Log4fe
-
 export default Log4fe
