@@ -9,15 +9,21 @@ branches:
   only:
     - master
 deploy:
-  provider: pages
-  local-dir: docs
-  skip_cleanup: true
-  target-branch: gh-pages
-  github_token: $GITHUB_TOKEN
-  keep-history: true
-  # fqdn: sorayama.me
-  on:
-    branch: master
+  - provider: pages
+    local-dir: docs
+    skip_cleanup: true
+    target-branch: gh-pages
+    github_token: $GITHUB_TOKEN
+    keep-history: true
+    # fqdn: sorayama.me
+    on:
+      branch: master
+  - provider: releases
+    github_token: $GITHUB_TOKEN
+    file: dist/*
+    skip_cleanup: true
+    on:
+      tags: true
 addons:
   apt:
     sources:
